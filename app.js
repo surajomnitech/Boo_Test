@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const profileRoutes = require('./routes/profile.js');
+const userRoutes = require('./routes/user.js');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,6 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use('/profiles', profileRoutes);
+app.use('/users', userRoutes);
 
 const startServer = () => {
     app.listen(port, () => {
