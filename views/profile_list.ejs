@@ -1,0 +1,17 @@
+<%- include('partials/prologue.ejs', { title: 'Profiles | Boo Personality Database' ,
+    description: 'Browse profiles in the Soulverse, the MBTI personality database of celebrities and fictional characters.'
+    }) %>
+
+    <h2>All Profiles</h2>
+
+    <ul>
+        <% profiles.forEach(profile=> { %>
+            <li>
+                <a href="/profiles/<%= profile.id %>">
+                    <%= profile.id %> - <%= profile.name %>
+                </a>
+            </li>
+            <% }) %>
+    </ul>
+
+    <%- include('partials/epilogue.ejs') %>
