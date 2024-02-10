@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha --require esm test/api-test.js"
+    "test": "mocha test/**/*.js",
+    "profile-test": "mocha test/profile-api-test.js",
+    "user-test": "mocha test/user-api-test.js"
   },
   "keywords": [],
   "author": "",
