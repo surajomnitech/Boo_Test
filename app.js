@@ -3,11 +3,34 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const profileRoutes = require('./routes/profile.js');
 const userRoutes = require('./routes/user.js');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+let mongoServer;
+
+// Initialize MongoDB memory server
+async function initializeMongoDB() {
+    if (!mongoServer) {
+        mongoServer = await MongoMemoryServer.create();
+        const mongoUri = mongoServer.getUri();
+
+        mongoose.connect(mongoUri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+    }
+}
+
+// Middleware to ensure MongoDB is initialized before route handling
+app.use(async (req, res, next) => {
+    await initializeMongoDB();
+    next();
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
