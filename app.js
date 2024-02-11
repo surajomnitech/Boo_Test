@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const profileRoutes = require('./routes/profile.js');
 const userRoutes = require('./routes/user.js');
+const commentRoutes = require('./routes/comment.js');
 const { initializeMongoDB } = require('./seed/init_data');
 
 const app = express();
@@ -22,6 +23,7 @@ app.set('view engine', 'ejs');
 
 app.use('/profiles', profileRoutes);
 app.use('/users', userRoutes);
+app.use('/comments', commentRoutes);
 
 async function startServer() {
     await initializeMongoDB();

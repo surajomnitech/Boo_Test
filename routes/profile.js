@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Profile = require('../models/profile'); // Import the Profile model
+const Comment = require('../models/comment'); // Import the Comment model
 
 // GET route to render the profile page by ID
 router.get('/:id', async (req, res, next) => {
@@ -9,10 +10,18 @@ router.get('/:id', async (req, res, next) => {
     const profileId = req.params.id;
 
     // Retrieve the profile from the database based on the ID
-    const profile = await Profile.findOne({ id: profileId });
+    const profile = await Profile.findOne({ _id: profileId }).populate('comments');
 
-    // Render the profile page with the retrieved profile
-    res.render('profile_template', { profile });
+    // Check if the client prefers JSON
+    const contentType = req.accepts(['html', 'json']);
+
+    if (contentType === 'json') {
+      // If the client prefers JSON, send the JSON response
+      res.json({ profile });
+    } else {
+      // If the client prefers HTML or content type is not specified, render the HTML template
+      res.render('profile_template', { profile });
+    }
   } catch (error) {
     // Log the error for debugging
     console.error('Error retrieving profile by ID:', error);
@@ -27,7 +36,7 @@ router.get('/', async (req, res, next) => {
     const profiles = await Profile.find({});
 
     const contentType = req.accepts(['html', 'json']);
-    console.log(contentType);
+
     if (contentType === 'json') {
       // If the client prefers JSON, send the JSON response
       res.json(profiles);

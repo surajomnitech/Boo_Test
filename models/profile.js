@@ -2,7 +2,6 @@
 const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
-    id: Number,
     name: String,
     description: String,
     mbti: String,
@@ -13,6 +12,7 @@ const profileSchema = new mongoose.Schema({
     sloan: String,
     psyche: String,
     image: String,
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
