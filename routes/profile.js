@@ -8,10 +8,28 @@ const Comment = require('../models/comment'); // Import the Comment model
 router.get('/:id', async (req, res, next) => {
   try {
     const profileId = req.params.id;
+    const filter = req.query.filter;
+    const sort = req.query.sort;
 
     // Retrieve the profile from the database based on the ID
     const profile = await Profile.findOne({ _id: profileId }).populate('comments');
 
+    let filteredComments = profile.comments;
+    // Filter comments based on criteria
+    if (filter && filter !== 'all') {
+      filteredComments = filteredComments.filter(comment => comment[filter] !== undefined && comment[filter] !== '');
+    }
+
+    // Sort comments
+    if (sort === 'best') {
+      // Sort by likes (descending order)
+      filteredComments.sort((a, b) => b.likes - a.likes);
+    } else if (sort === 'recent') {
+      // Sort by the most recent comments (descending order)
+      filteredComments.sort((a, b) => b.createdAt - a.createdAt);
+    }
+
+    profile.comments = filteredComments
     // Check if the client prefers JSON
     const contentType = req.accepts(['html', 'json']);
 

@@ -7,7 +7,8 @@
     "start": "node app.js",
     "test": "mocha test/**/*.js",
     "profile-test": "mocha test/profile-api-test.js",
-    "user-test": "mocha test/user-api-test.js"
+    "user-test": "mocha test/user-api-test.js",
+    "comment-test": "mocha test/profile-comment-test.js"
   },
   "keywords": [],
   "author": "",
