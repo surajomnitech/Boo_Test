@@ -7,6 +7,7 @@ const Comment = require('../models/comment'); // Import the Comment model
 
 startServer();
 
+
 describe('API Tests', () => {
 
     it('should add a comment and retrieve the profile with comments sorted by most recent', async () => {
@@ -33,7 +34,7 @@ describe('API Tests', () => {
                     zodiac: 'Libra',
                     userId: user._id,
                 })
-                .expect(200);
+                .expect(201);
 
             // Now, retrieve the profile and check if the comments are sorted by most recent
             const profileResponse = await request(app)
@@ -66,6 +67,8 @@ describe('API Tests', () => {
             }
 
             const user = await User.findOne({});
+            // Delete existing comments
+            await Comment.deleteMany({ profileId: profile._id });
 
             // Add comments using the profileId and userId
             const comment1 = await request(app)
@@ -135,7 +138,6 @@ describe('API Tests', () => {
             assert.strictEqual(commentsArray[1].title, 'Test Comment 3');
             assert.strictEqual(commentsArray[2].title, 'Test Comment 1');
         } catch (error) {
-            // Handle any errors
             console.error('API Test Error:', error);
             throw error;
         }
@@ -221,7 +223,6 @@ describe('API Tests', () => {
             assert.strictEqual(commentsArray[1].title, 'Test Comment 1');
 
         } catch (error) {
-            // Handle any errors
             console.error('API Test Error:', error);
             throw error;
         }

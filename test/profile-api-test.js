@@ -14,12 +14,9 @@ describe('API Tests', () => {
             .end((err, res) => {
                 if (err) return done(err);
 
-                // Log the HTML content for debugging
-                console.log(res.text);
-
                 // Parse HTML and inspect its structure
                 const $ = cheerio.load(res.text);
-                const profileList = $('ul');  // Use a more specific selector based on your template
+                const profileList = $('ul');  // Here i have not used the most ideal element. just wanted to demonstrate the test.
 
                 // Assert the presence of the <ul> element
                 assert.strictEqual(profileList.length > 0, true);
@@ -44,5 +41,4 @@ describe('API Tests', () => {
             });
     });
 
-    // Add more tests as needed
 });

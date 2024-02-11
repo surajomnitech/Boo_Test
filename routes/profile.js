@@ -1,4 +1,3 @@
-// routes/profile.js
 const express = require('express');
 const router = express.Router();
 const Profile = require('../models/profile'); // Import the Profile model

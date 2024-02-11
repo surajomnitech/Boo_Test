@@ -1,4 +1,5 @@
-// seed/init_data.js
+// purpose of this is to initiate the db server and also add a 
+// profile at the inception to make it easy to test the app.
 
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
@@ -17,7 +18,7 @@ async function initializeMongoDB() {
             useUnifiedTopology: true,
         });
 
-        // Create default user if not exists
+        // Create default user
         const defaultUser = {
             name: 'James',
             password: 'password',
@@ -28,7 +29,7 @@ async function initializeMongoDB() {
             await newUser.save();
         }
 
-        // Create default profile if not exists
+        // Create default profile
         const defaultProfile = {
             name: 'Elon Musk',
             description: 'Elon Reeve Musk born June 28, 1971) is a businessman and investor. He is the founder, chairman, CEO, and CTO of SpaceX; angel investor, CEO, product architect, and former chairman of Tesla, Inc.; owner, chairman, and CTO of X Corp.; founder of the Boring Company and xAI; co-founder of Neuralink and OpenAI; and president of the Musk Foundation. He is the second wealthiest person in the world, with an estimated net worth of US$232 billion as of December 2023, according to the Bloomberg Billionaires Index, and $182.6  billion according to Forbes, primarily from his ownership stakes in Tesla and SpaceX.',

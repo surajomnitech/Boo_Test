@@ -1,5 +1,3 @@
-// routes/comment.js
-
 const express = require('express');
 const router = express.Router();
 const Comment = require('../models/comment');
@@ -33,7 +31,7 @@ router.post('/add/:profileId', async (req, res, next) => {
     }
 });
 
-// GET route to retrieve all comments for a profile
+// GET route to retrieve all comments for a profile (this is not used right now may be need it later.)
 router.get('/profile/:profileId', async (req, res, next) => {
     try {
         const profileId = req.params.profileId;
